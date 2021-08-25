@@ -1,0 +1,22 @@
+{
+    "name": "s4urp/media-rename",
+    "authors": [
+        {
+            "name": "Alexander Tarasov",
+            "email": "s4urp8n@yandex.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "s4urp8n/media-info": "dev-master",
+        "zver/common": "dev-master"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "5.3.x-dev"
+    }
+}
