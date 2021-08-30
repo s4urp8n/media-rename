@@ -114,17 +114,6 @@ class MediaRename
             ],
             [
                 'keys'     => [
-                    ['_EXIF_', 'FILE', 'FileDateTime'],
-                ],
-                'callback' => function ($value) {
-                    if (!is_int($value)) {
-                        throw new \Exception("Wrong value format for FileDateTime");
-                    }
-                    return date(static::DATE_FORMAT, $value);
-                },
-            ],
-            [
-                'keys'     => [
                     ['_EXIF_', 'IFP0', 'DateTime'],
                     ['_EXIF_', 'EXIF', 'DateTimeDigitized'],
                     ['_EXIF_', 'EXIF', 'DateTimeOriginal'],
@@ -171,10 +160,22 @@ class MediaRename
             }
         }
 
-        $times = array_count_values($times);
-        arsort($times);
+        if (count($times) <= 1) {
+            return $times;
+        }
 
-        return array_keys($times);
+        $times = array_count_values($times);
+        foreach ($times as $datetime => $count) {
+            $times[$datetime] = $count . ' ' . $datetime;
+        }
+        $times = array_values($times);
+        rsort($times);
+
+        foreach ($times as $index => $datetime) {
+            $times[$index] = preg_replace('/^\d+ /', '', $datetime);
+        }
+
+        return $times;
     }
 
 }
